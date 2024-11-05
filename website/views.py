@@ -1,11 +1,11 @@
 # store standard roots in views like login/homepage/subpages etc.
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 # Blueprint means it has a lot of urls inside here 
 views = Blueprint('views', __name__)
 
 @views.route('/')
 def home():
-    return "<h1>Test</h1>"
+    return render_template("home.html")
 
 
