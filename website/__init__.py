@@ -8,6 +8,8 @@ db= SQLAlchemy()
 DB_NAME = "database.db"
 ADMIN_CREATION_PASSWORD = "1234567" #TODO: Add to a config file
 
+#blank function to create app
+
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'hgbsdfbjh'
