@@ -16,10 +16,10 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
 
-    from .views import views
-    from .auth import auth
-    from .auth_admin import auth_admin
-    from .views_admin import views_admin
+    from .user.views import views
+    from .user.auth import auth
+    from .admin.auth_admin import auth_admin
+    from .admin.views_admin import views_admin
 
     # url prefix says from where I can access the blueprint
     app.register_blueprint(views, url_prefix='/')
@@ -27,7 +27,7 @@ def create_app():
     app.register_blueprint(auth_admin, url_prefix='/')
     app.register_blueprint(views_admin, url_prefix='/admin')
 
-    from .models import User, Note
+    from .models import User
 
     create_database(app=app)
 

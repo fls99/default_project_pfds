@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from . import db, ADMIN_CREATION_PASSWORD
-from .models import Admin
+from .. import db, ADMIN_CREATION_PASSWORD
+from ..models import Admin
 
-auth_admin = Blueprint('auth_admin', __name__)
+auth_admin = Blueprint('auth_admin', __name__, template_folder='templates')
 
 
 @auth_admin.route('/admin')
@@ -30,7 +30,7 @@ def admin_login():
         else:
             flash('Invalid admin credentials', category='error')
             
-    return render_template("admin/admin_login.html", user=current_user)
+    return render_template("admin_login.html", user=current_user)
 
 @auth_admin.route('/admin/sign-up', methods=['GET', 'POST'])
 def admin_signup():
@@ -62,4 +62,4 @@ def admin_signup():
             flash('Admin account created', category='success')
             return redirect(url_for('auth_admin.admin_login'))
 
-    return render_template("admin/admin_signup.html", user=current_user)
+    return render_template("admin_signup.html", user=current_user)

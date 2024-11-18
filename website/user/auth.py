@@ -1,12 +1,12 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
-from . import db
-from .models import User, Note
+from .. import db
+from ..models import User
 from flask_login import login_user, logout_user, login_required, current_user
 
 
 # Blueprint means it has a lot of urls inside here 
-auth = Blueprint('auth', __name__)
+auth = Blueprint('auth', __name__, template_folder='templates')
 
 # by default only get requests (when the website hsows us) now also post when we change the state of the website 
 @auth.route('/login', methods=['GET', 'POST'])
