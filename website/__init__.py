@@ -2,10 +2,11 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
+from flask_login import LoginManager
 
 db= SQLAlchemy()
 DB_NAME = "database.db"
-
+ADMIN_CREATION_PASSWORD = "1234567" #TODO: Add to a config file
 
 def create_app():
     app = Flask(__name__)
@@ -15,14 +16,27 @@ def create_app():
 
     from .views import views
     from .auth import auth
+    from .auth_admin import auth_admin
+    from .views_admin import views_admin
 
     # url prefix says from where I can access the blueprint
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
+    app.register_blueprint(auth_admin, url_prefix='/')
+    app.register_blueprint(views_admin, url_prefix='/admin')
 
     from .models import User, Note
 
     create_database(app=app)
+
+    login_manager = LoginManager()
+    login_manager.login_view = 'auth.login'
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(id):
+        # get primary key (User here no specification of field needed )
+        return User.query.get(int(id))
 
     return app
 

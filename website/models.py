@@ -16,3 +16,10 @@ class User(db.Model, UserMixin):
     first_name= db.Column(db.String(150))
     # want to find all notes from a user 
     notes = db.relationship('Note')
+
+class Admin(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(150), unique=True)
+    password = db.Column(db.String(150))
+    name = db.Column(db.String(150))
+    admin_level = db.Column(db.Integer, default=1)  # 1 is the lowest level of admin
